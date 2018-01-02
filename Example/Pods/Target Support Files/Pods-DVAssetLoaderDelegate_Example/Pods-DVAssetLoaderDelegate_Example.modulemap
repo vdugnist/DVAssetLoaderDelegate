@@ -1,0 +1,6 @@
+framework module Pods_DVAssetLoaderDelegate_Example {
+  umbrella header "Pods-DVAssetLoaderDelegate_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}

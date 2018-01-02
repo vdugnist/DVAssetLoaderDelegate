@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'DVAssetLoaderDelegate_Example' do
+  pod 'DVAssetLoaderDelegate', :path => '../'
+
+  target 'DVAssetLoaderDelegate_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
