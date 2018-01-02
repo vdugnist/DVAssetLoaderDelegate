@@ -213,10 +213,10 @@
     if (loadingRequest.dataRequest.requestsAllDataToEndOfResource) {
         long long currentDataResponseOffset = currentOffset - requestedOffset;
         long long currentDataResponseLength = mutableData.length - currentDataResponseOffset;
-        [loadingRequest.dataRequest respondWithData:[mutableData subdataWithRange:NSMakeRange(currentDataResponseOffset, currentDataResponseLength)]];
+        [loadingRequest.dataRequest respondWithData:[mutableData subdataWithRange:NSMakeRange((NSUInteger)currentDataResponseOffset, (NSUInteger)currentDataResponseLength)]];
     }
     else if (currentOffset - requestedOffset <= mutableData.length) {
-        [loadingRequest.dataRequest respondWithData:[mutableData subdataWithRange:NSMakeRange(currentOffset - requestedOffset, MIN(mutableData.length - (currentOffset - requestedOffset), length))]];
+        [loadingRequest.dataRequest respondWithData:[mutableData subdataWithRange:NSMakeRange((NSUInteger)(currentOffset - requestedOffset), (NSUInteger)MIN(mutableData.length - (currentOffset - requestedOffset), length))]];
     }
     else {
         [loadingRequest finishLoading];
@@ -291,7 +291,7 @@
 
     NSData *loadedData = self.datas[index];
     long long requestedOffset = loadingRequest.dataRequest.requestedOffset;
-    long long length = loadedData.length;
+    NSUInteger length = loadedData.length;
     long long fullLength = [[(NSHTTPURLResponse *)task.response allHeaderFields][@"Content-Range"] componentsSeparatedByString:@"/"].lastObject.longLongValue;
     [self processData:loadedData forOffset:requestedOffset length:length fullLength:fullLength];
 
@@ -329,12 +329,12 @@
     }
 }
 
-- (void)processData:(NSData *)data forOffset:(long long)offset length:(long)length fullLength:(long long)fullLength {
+- (void)processData:(NSData *)data forOffset:(long long)offset length:(NSUInteger)length fullLength:(long long)fullLength {
     if (fullLength == 0 || data.length == 0) {
         return;
     }
 
-    NSRange range = NSMakeRange(offset, length);
+    NSRange range = NSMakeRange((NSUInteger)offset, length);
     NSValue *rangeValue = [NSValue valueWithRange:range];
     self.datasForSavingToCache[rangeValue] = data;
 
