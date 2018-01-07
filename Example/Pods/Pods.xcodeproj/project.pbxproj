@@ -25,6 +25,7 @@
 		FA1D026F200220BC003B020A /* DVURLAsset.h in Headers */ = {isa = PBXBuildFile; fileRef = FA1D026D200220BC003B020A /* DVURLAsset.h */; };
 		FA1D0270200220BC003B020A /* DVURLAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1D026E200220BC003B020A /* DVURLAsset.m */; };
 		FA1D027220022138003B020A /* DVAssetLoaderDelegatesDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = FA1D027120022138003B020A /* DVAssetLoaderDelegatesDelegate.h */; };
+		FA1D02742002279C003B020A /* DVAssetLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = FA1D02732002279C003B020A /* DVAssetLoader.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +78,7 @@
 		FA1D026D200220BC003B020A /* DVURLAsset.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DVURLAsset.h; path = DVAssetLoaderDelegate/Classes/DVURLAsset.h; sourceTree = "<group>"; };
 		FA1D026E200220BC003B020A /* DVURLAsset.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = DVURLAsset.m; path = DVAssetLoaderDelegate/Classes/DVURLAsset.m; sourceTree = "<group>"; };
 		FA1D027120022138003B020A /* DVAssetLoaderDelegatesDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DVAssetLoaderDelegatesDelegate.h; path = DVAssetLoaderDelegate/Classes/DVAssetLoaderDelegatesDelegate.h; sourceTree = "<group>"; };
+		FA1D02732002279C003B020A /* DVAssetLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DVAssetLoader.h; path = DVAssetLoaderDelegate/Classes/DVAssetLoader.h; sourceTree = "<group>"; };
 		FBEAFED2F4ECC100259CCE47FC64CC71 /* DVAssetLoaderDelegate.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = DVAssetLoaderDelegate.modulemap; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -157,6 +159,7 @@
 		45CF4C44F144CD3DFE6031C777E25CC5 /* DVAssetLoaderDelegate */ = {
 			isa = PBXGroup;
 			children = (
+				FA1D02732002279C003B020A /* DVAssetLoader.h */,
 				FA1D027120022138003B020A /* DVAssetLoaderDelegatesDelegate.h */,
 				FA1D026D200220BC003B020A /* DVURLAsset.h */,
 				FA1D026E200220BC003B020A /* DVURLAsset.m */,
@@ -249,6 +252,7 @@
 			files = (
 				FA1D027220022138003B020A /* DVAssetLoaderDelegatesDelegate.h in Headers */,
 				8460386DC6A37E8DA1842DEF6525EDE1 /* DVAssetLoaderDelegate-umbrella.h in Headers */,
+				FA1D02742002279C003B020A /* DVAssetLoader.h in Headers */,
 				40C9D900B3C3C72584C9E406A0F41E97 /* DVAssetLoaderDelegate.h in Headers */,
 				D3882E6E4AF2DC63DFDB65D7CC2F56FA /* DVAssetLoaderHelpers.h in Headers */,
 				FA1D026F200220BC003B020A /* DVURLAsset.h in Headers */,
