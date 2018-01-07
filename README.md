@@ -1,15 +1,43 @@
 # DVAssetLoaderDelegate
 
-[![CI Status](http://img.shields.io/travis/vdugnist/DVAssetLoaderDelegate.svg?style=flat)](https://travis-ci.org/vdugnist/DVAssetLoaderDelegate)
 [![Version](https://img.shields.io/cocoapods/v/DVAssetLoaderDelegate.svg?style=flat)](http://cocoapods.org/pods/DVAssetLoaderDelegate)
 [![License](https://img.shields.io/cocoapods/l/DVAssetLoaderDelegate.svg?style=flat)](http://cocoapods.org/pods/DVAssetLoaderDelegate)
 [![Platform](https://img.shields.io/cocoapods/p/DVAssetLoaderDelegate.svg?style=flat)](http://cocoapods.org/pods/DVAssetLoaderDelegate)
 
-## Example
+## Description
 
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
+With DVAssetLoaderDelegate you can implement caching data downloaded by AVPlayer for AVURLAsset. DVAssetLoaderDelegate provides you delegate method you can use to save downloaded data:
 
-## Requirements
+```
+- (void)dvAssetLoaderDelegate:(DVAssetLoaderDelegate *)resourceLoader
+                  didLoadData:(NSData *)data
+                       forURL:(NSURL *)url;
+```
+
+For other methods check [DVAssetLoaderDelegate.h](https://github.com/vdugnist/DVAssetLoaderDelegate/blob/master/DVAssetLoaderDelegate/Classes/DVAssetLoaderDelegate.h).
+
+## Usage
+
+1. Create `DVAssetLoaderDelegate` object using URL for AVURLAsset.
+2. Set `DVAssetLoaderDelegate` delegate for receiving cache data.
+3. Before creating `AVURLAsset`, change URL scheme to `[DVAssetLoaderDelegate scheme]`.
+4. Create `AVURLAsset` with URL with updated scheme.
+5. Set `AVURLAsset`'s resource loader delegate to created `DVAssetLoaderDelegate` object.
+
+
+```
+NSURL *URL = ...;
+
+DVAssetLoaderDelegate *resourceLoaderDelegate = [[DVAssetLoaderDelegate alloc] initWithURL:URL];
+resourceLoaderDelegate.delegate = self;
+
+
+NSURLComponents *components = [[NSURLComponents alloc] initWithURL:URL resolvingAgainstBaseURL:NO];
+components.scheme = [DVAssetLoaderDelegate scheme];
+
+AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:[components URL] options:options];
+[asset.resourceLoader setDelegate:resourceLoaderDelegate queue:dispatch_get_main_queue()];
+```
 
 ## Installation
 
