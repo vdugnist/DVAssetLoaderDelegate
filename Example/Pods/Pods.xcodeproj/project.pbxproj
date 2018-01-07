@@ -22,6 +22,9 @@
 		D3882E6E4AF2DC63DFDB65D7CC2F56FA /* DVAssetLoaderHelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = EC5E2426141F1002AEA0D48E9EBDD989 /* DVAssetLoaderHelpers.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D397C26BEF662A1553BFB29DDFCBF453 /* DVAssetLoaderHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 1573798EE95EE164746A80820CEAADAC /* DVAssetLoaderHelpers.m */; };
 		F6A31D3C36D5360EE5E743C9331792E5 /* Pods-DVAssetLoaderDelegate_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 8AB1AAC685E16FDA95FD73CF9E17037C /* Pods-DVAssetLoaderDelegate_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FA1D026F200220BC003B020A /* DVURLAsset.h in Headers */ = {isa = PBXBuildFile; fileRef = FA1D026D200220BC003B020A /* DVURLAsset.h */; };
+		FA1D0270200220BC003B020A /* DVURLAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = FA1D026E200220BC003B020A /* DVURLAsset.m */; };
+		FA1D027220022138003B020A /* DVAssetLoaderDelegatesDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = FA1D027120022138003B020A /* DVAssetLoaderDelegatesDelegate.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,22 +48,22 @@
 		36D91FA3DDB53DA46A5E7C08E932527F /* Pods-DVAssetLoaderDelegate_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DVAssetLoaderDelegate_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		479C04026BFF4A933AF2325D9EFC1C99 /* Pods-DVAssetLoaderDelegate_Tests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-DVAssetLoaderDelegate_Tests-frameworks.sh"; sourceTree = "<group>"; };
 		48E8653331EAEB9B398227F8E5681B55 /* DVAssetLoaderDelegate-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "DVAssetLoaderDelegate-umbrella.h"; sourceTree = "<group>"; };
-		4DC32B7CFA4B05D231A4022C41DA2B48 /* Pods_DVAssetLoaderDelegate_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_DVAssetLoaderDelegate_Tests.framework; path = "Pods-DVAssetLoaderDelegate_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4DC32B7CFA4B05D231A4022C41DA2B48 /* Pods_DVAssetLoaderDelegate_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DVAssetLoaderDelegate_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F826D2589A9AA3CB1E2BB4DBC776E74 /* DVAssetLoaderDelegate-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "DVAssetLoaderDelegate-prefix.pch"; sourceTree = "<group>"; };
-		5C40891B316B0EDBB34E540ECADE5A66 /* Pods_DVAssetLoaderDelegate_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_DVAssetLoaderDelegate_Example.framework; path = "Pods-DVAssetLoaderDelegate_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C40891B316B0EDBB34E540ECADE5A66 /* Pods_DVAssetLoaderDelegate_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DVAssetLoaderDelegate_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		61D07988507C5CB55C4B5F1141FDC9AA /* Pods-DVAssetLoaderDelegate_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-DVAssetLoaderDelegate_Tests-resources.sh"; sourceTree = "<group>"; };
-		65AE741C897C95D823004CE7F0A486F3 /* Pods-DVAssetLoaderDelegate_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-DVAssetLoaderDelegate_Example.modulemap"; sourceTree = "<group>"; };
-		6878DA71756950B1EE5286241A9DCAF2 /* DVAssetLoaderDelegate.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = DVAssetLoaderDelegate.framework; path = DVAssetLoaderDelegate.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		65AE741C897C95D823004CE7F0A486F3 /* Pods-DVAssetLoaderDelegate_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-DVAssetLoaderDelegate_Example.modulemap"; sourceTree = "<group>"; };
+		6878DA71756950B1EE5286241A9DCAF2 /* DVAssetLoaderDelegate.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DVAssetLoaderDelegate.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		691826F72465B24325E9726711F494AE /* Pods-DVAssetLoaderDelegate_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-DVAssetLoaderDelegate_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		784C91654149ECD8A491D552F04AF9E2 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
 		7B7A6A1040F11D238C3E673AF146CDC2 /* Pods-DVAssetLoaderDelegate_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-DVAssetLoaderDelegate_Example-dummy.m"; sourceTree = "<group>"; };
 		8AB1AAC685E16FDA95FD73CF9E17037C /* Pods-DVAssetLoaderDelegate_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-DVAssetLoaderDelegate_Example-umbrella.h"; sourceTree = "<group>"; };
 		8AF9D6408BA79F4F361E176E640D3B8A /* Pods-DVAssetLoaderDelegate_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-DVAssetLoaderDelegate_Tests-dummy.m"; sourceTree = "<group>"; };
 		933BCDCAC47B159ED2417C2C17264820 /* DVAssetLoaderDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DVAssetLoaderDelegate.h; path = DVAssetLoaderDelegate/Classes/DVAssetLoaderDelegate.h; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A2E472AEB4D172C0E16E112DC0DA3776 /* DVAssetLoaderDelegate-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "DVAssetLoaderDelegate-dummy.m"; sourceTree = "<group>"; };
 		AC8CB1B830CF7008A46D037B158863C2 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B3926AFCDE7DE685483FE4FE7711088D /* Pods-DVAssetLoaderDelegate_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-DVAssetLoaderDelegate_Tests.modulemap"; sourceTree = "<group>"; };
+		B3926AFCDE7DE685483FE4FE7711088D /* Pods-DVAssetLoaderDelegate_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-DVAssetLoaderDelegate_Tests.modulemap"; sourceTree = "<group>"; };
 		C746B14C86DFD96CC78ADF5051440B80 /* Pods-DVAssetLoaderDelegate_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-DVAssetLoaderDelegate_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		E4D7F05D6C9A5B5E270417FA11F6C9C8 /* DVAssetLoaderDelegate.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = DVAssetLoaderDelegate.xcconfig; sourceTree = "<group>"; };
 		E6003D3188CE3BB87AFD22C25E101A6F /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -71,7 +74,10 @@
 		F229F250E153DFBB08C8BF48F0769678 /* Pods-DVAssetLoaderDelegate_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DVAssetLoaderDelegate_Example.release.xcconfig"; sourceTree = "<group>"; };
 		F25314A66CBF916C19A314A805866D30 /* Pods-DVAssetLoaderDelegate_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-DVAssetLoaderDelegate_Example-acknowledgements.plist"; sourceTree = "<group>"; };
 		F54B6D64B55714042C686CC8C626C414 /* Pods-DVAssetLoaderDelegate_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-DVAssetLoaderDelegate_Example-frameworks.sh"; sourceTree = "<group>"; };
-		FBEAFED2F4ECC100259CCE47FC64CC71 /* DVAssetLoaderDelegate.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = DVAssetLoaderDelegate.modulemap; sourceTree = "<group>"; };
+		FA1D026D200220BC003B020A /* DVURLAsset.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DVURLAsset.h; path = DVAssetLoaderDelegate/Classes/DVURLAsset.h; sourceTree = "<group>"; };
+		FA1D026E200220BC003B020A /* DVURLAsset.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = DVURLAsset.m; path = DVAssetLoaderDelegate/Classes/DVURLAsset.m; sourceTree = "<group>"; };
+		FA1D027120022138003B020A /* DVAssetLoaderDelegatesDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DVAssetLoaderDelegatesDelegate.h; path = DVAssetLoaderDelegate/Classes/DVAssetLoaderDelegatesDelegate.h; sourceTree = "<group>"; };
+		FBEAFED2F4ECC100259CCE47FC64CC71 /* DVAssetLoaderDelegate.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = DVAssetLoaderDelegate.modulemap; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +157,9 @@
 		45CF4C44F144CD3DFE6031C777E25CC5 /* DVAssetLoaderDelegate */ = {
 			isa = PBXGroup;
 			children = (
+				FA1D027120022138003B020A /* DVAssetLoaderDelegatesDelegate.h */,
+				FA1D026D200220BC003B020A /* DVURLAsset.h */,
+				FA1D026E200220BC003B020A /* DVURLAsset.m */,
 				933BCDCAC47B159ED2417C2C17264820 /* DVAssetLoaderDelegate.h */,
 				E7BAAB41EC5AB2062D473FCC67128F86 /* DVAssetLoaderDelegate.m */,
 				EC5E2426141F1002AEA0D48E9EBDD989 /* DVAssetLoaderHelpers.h */,
@@ -238,9 +247,11 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA1D027220022138003B020A /* DVAssetLoaderDelegatesDelegate.h in Headers */,
 				8460386DC6A37E8DA1842DEF6525EDE1 /* DVAssetLoaderDelegate-umbrella.h in Headers */,
 				40C9D900B3C3C72584C9E406A0F41E97 /* DVAssetLoaderDelegate.h in Headers */,
 				D3882E6E4AF2DC63DFDB65D7CC2F56FA /* DVAssetLoaderHelpers.h in Headers */,
+				FA1D026F200220BC003B020A /* DVURLAsset.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -348,6 +359,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA1D0270200220BC003B020A /* DVURLAsset.m in Sources */,
 				1031154CCE3CF1010653F2A865E75D16 /* DVAssetLoaderDelegate-dummy.m in Sources */,
 				5EE5EB37603CB8B81877599265C79448 /* DVAssetLoaderDelegate.m in Sources */,
 				D397C26BEF662A1553BFB29DDFCBF453 /* DVAssetLoaderHelpers.m in Sources */,

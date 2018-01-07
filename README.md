@@ -14,9 +14,16 @@ With DVAssetLoaderDelegate you can implement caching data downloaded by AVPlayer
                        forURL:(NSURL *)url;
 ```
 
-For other methods check [DVAssetLoaderDelegate.h](https://github.com/vdugnist/DVAssetLoaderDelegate/blob/master/DVAssetLoaderDelegate/Classes/DVAssetLoaderDelegate.h).
+For other methods check [DVAssetLoaderDelegatesDelegate.h](https://github.com/vdugnist/DVAssetLoaderDelegate/blob/master/DVAssetLoaderDelegate/Classes/DVAssetLoaderDelegatesDelegate.h).
 
 ## Usage
+
+### Easy way (subclassing AVURLAsset)
+
+1. Create `DVURLAsset`.
+2. Implement `DVURLAsset`'s loaderDelegate.
+
+### Manual way (without subclassing)
 
 1. Create `DVAssetLoaderDelegate` object using URL for AVURLAsset.
 2. Set `DVAssetLoaderDelegate` delegate for receiving cache data.
