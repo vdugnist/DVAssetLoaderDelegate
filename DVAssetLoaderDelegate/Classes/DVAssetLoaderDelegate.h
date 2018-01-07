@@ -1,5 +1,5 @@
 //
-//  DVURLAssetResourceLoader.h
+//  DVAssetLoaderDelegate.h
 //
 //  Created by Vladislav Dugnist on 31/12/2017.
 //  Copyright © 2017 vdugnist. All rights reserved.
@@ -16,21 +16,21 @@
  Called when the file downloaded completely.
  May not be called when the file contains information not relevant to playback.
  */
-- (void)dvAssetLoaderDelegate:(DVAssetLoaderDelegate *)resourceLoader
+- (void)dvAssetLoaderDelegate:(DVAssetLoaderDelegate *)loaderDelegate
                      didLoadData:(NSData *)data
                           forURL:(NSURL *)url;
 /**
- Called when resource loader downloaded data range so you can manually operate with a cache.
+ Called when loader delegate downloaded data range so you can manually operate with a cache.
  */
-- (void)dvAssetLoaderDelegate:(DVAssetLoaderDelegate *)resourceLoader
+- (void)dvAssetLoaderDelegate:(DVAssetLoaderDelegate *)loaderDelegate
                      didLoadData:(NSData *)data
                         forRange:(NSRange)range
                              url:(NSURL *)url;
 
 /**
- Called when resource loader recieved loading error.
+ Called when loader delegate recieved loading error.
  */
-- (void)dvAssetLoaderDelegate:(DVAssetLoaderDelegate *)resourceLoader
+- (void)dvAssetLoaderDelegate:(DVAssetLoaderDelegate *)loaderDelegate
           didRecieveLoadingError:(NSError *)error
                     withDataTask:(NSURLSessionDataTask *)dataTask
                       forRequest:(AVAssetResourceLoadingRequest *)request;

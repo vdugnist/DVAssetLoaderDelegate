@@ -1,5 +1,5 @@
 //
-//  DVURLAssetResourceLoader.m
+//  DVAssetLoaderDelegate.m
 //
 //  Created by Vladislav Dugnist on 31/12/2017.
 //  Copyright © 2017 vdugnist. All rights reserved.
