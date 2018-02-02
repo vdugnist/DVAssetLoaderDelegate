@@ -23,5 +23,5 @@ This pod can help you play and cache AVAsset data with one request.
   s.ios.deployment_target = '9.0'
 
   s.source_files = 'DVAssetLoaderDelegate/Classes/**/*'
-  s.frameworks = 'AVFoundation', 'MobileCoreServices'
+  s.frameworks = 'AVFoundation', 'MobileCoreServices', 'SystemConfiguration'
 end

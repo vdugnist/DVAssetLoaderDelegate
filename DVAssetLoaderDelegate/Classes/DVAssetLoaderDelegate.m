@@ -6,11 +6,13 @@
 //
 
 #import <MobileCoreServices/UTType.h>
+#import <SystemConfiguration/SCNetworkReachability.h>
 #import "DVAssetLoaderDelegate.h"
 #import "DVAssetLoaderHelpers.h"
 
 @interface DVAssetLoaderDelegate () <NSURLSessionDelegate, NSURLSessionDataDelegate>
 
+@property (nonatomic) BOOL wasNetworkError;
 @property (nonatomic, readonly) NSURL *originalURL;
 @property (nonatomic, readonly) NSString *originalScheme;
 
@@ -60,6 +62,16 @@
 - (BOOL)resourceLoader:(AVAssetResourceLoader *)resourceLoader shouldWaitForLoadingOfRequestedResource:(AVAssetResourceLoadingRequest *)loadingRequest {
     if (![loadingRequest.request.URL.scheme isEqualToString:[[self class] scheme]]) {
         return NO;
+    }
+    
+    // check reachability only if there was network error before
+    if (self.wasNetworkError) {
+        BOOL nowReachable = isNetworkReachable();
+        if (nowReachable) {
+            self.wasNetworkError = NO;
+        } else {
+            return NO;
+        }
     }
 
     NSUInteger loadingRequestIndex = NSNotFound;
@@ -288,6 +300,10 @@
     else {
         [loadingRequest finishLoading];
     }
+    
+    if (error && [error.domain isEqualToString:NSURLErrorDomain] && error.code != NSURLErrorCancelled) {
+        self.wasNetworkError = YES;
+    }
 
     NSData *loadedData = self.datas[index];
     long long requestedOffset = loadingRequest.dataRequest.requestedOffset;
@@ -359,6 +375,22 @@
     NSURLComponents *actualURLComponents = [[NSURLComponents alloc] initWithURL:url resolvingAgainstBaseURL:NO];
     actualURLComponents.scheme = self.originalScheme;
     return [actualURLComponents URL];
+}
+
+BOOL isNetworkReachable() {
+    NSDate *start = [NSDate date];
+    BOOL success = false;
+    const char *host_name = [@"example.com" cStringUsingEncoding:NSASCIIStringEncoding];
+    
+    SCNetworkReachabilityRef reachability = SCNetworkReachabilityCreateWithName(NULL, host_name);
+    SCNetworkReachabilityFlags flags;
+    success = SCNetworkReachabilityGetFlags(reachability, &flags);
+    
+    CFRelease(reachability);
+    
+    BOOL isAvailable = success && (flags & kSCNetworkFlagsReachable) && !(flags & kSCNetworkFlagsConnectionRequired);
+    
+    return isAvailable;
 }
 
 @end
