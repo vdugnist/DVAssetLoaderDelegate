@@ -6,14 +6,19 @@
 //
 
 #import <MobileCoreServices/UTType.h>
+#import <SystemConfiguration/SCNetworkReachability.h>
 #import "DVAssetLoaderDelegate.h"
 #import "DVAssetLoaderHelpers.h"
+#import "DVAssetLoaderError.h"
+
+static NSTimeInterval const kDefaultLoadingTimeout = 15;
 
 @interface DVAssetLoaderDelegate () <NSURLSessionDelegate, NSURLSessionDataDelegate>
 
 @property (nonatomic, readonly) NSURL *originalURL;
 @property (nonatomic, readonly) NSString *originalScheme;
 
+@property (nonatomic) DVAssetLoaderError *networkError;
 @property (nonatomic) NSMutableArray<AVAssetResourceLoadingRequest *> *pendingRequests;
 @property (nonatomic) NSMutableArray<NSURLSessionDataTask *> *dataTasks;
 @property (nonatomic) NSMutableArray<NSMutableData *> *datas;
@@ -35,6 +40,7 @@
         _dataTasks = [NSMutableArray new];
         _datas = [NSMutableArray new];
         _datasForSavingToCache = [NSMutableDictionary new];
+        _networkTimeout = kDefaultLoadingTimeout;
         _session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]
                                                  delegate:self
                                             delegateQueue:[NSOperationQueue mainQueue]];
@@ -60,6 +66,22 @@
 - (BOOL)resourceLoader:(AVAssetResourceLoader *)resourceLoader shouldWaitForLoadingOfRequestedResource:(AVAssetResourceLoadingRequest *)loadingRequest {
     if (![loadingRequest.request.URL.scheme isEqualToString:[[self class] scheme]]) {
         return NO;
+    }
+    
+    // check reachability only if there was network error before
+    if (self.networkError) {
+        BOOL nowReachable = isNetworkReachable();
+        if (nowReachable) {
+            self.networkError = nil;
+        } else if ([[NSDate date] timeIntervalSinceDate:self.networkError.date] > self.networkTimeout){
+            if ([self.delegate respondsToSelector:@selector(dvAssetLoaderDelegate:didRecieveLoadingError:withDataTask:forRequest:)]) {
+                [self.delegate dvAssetLoaderDelegate:self didRecieveLoadingError:self.networkError.error withDataTask:nil forRequest:loadingRequest];
+            }
+            return NO;
+        } else {
+            [loadingRequest finishLoadingWithError:self.networkError.error];
+            return YES;
+        }
     }
 
     NSUInteger loadingRequestIndex = NSNotFound;
@@ -300,8 +322,15 @@
     [self.dataTasks removeObjectAtIndex:index];
 
     BOOL isCancelledError = [error.domain isEqualToString:NSURLErrorDomain] && error.code == NSURLErrorCancelled;
-    if (error && !isCancelledError && [self.delegate respondsToSelector:@selector(dvAssetLoaderDelegate:didRecieveLoadingError:withDataTask:forRequest:)]) {
+    BOOL isNetworkError = [error.domain isEqualToString:NSURLErrorDomain] && error.code != NSURLErrorCancelled;
+    BOOL isDelegateRespondsToSelector = [self.delegate respondsToSelector:@selector(dvAssetLoaderDelegate:didRecieveLoadingError:withDataTask:forRequest:)];
+    
+    if (error && !isCancelledError && !isNetworkError && isDelegateRespondsToSelector) {
         [self.delegate dvAssetLoaderDelegate:self didRecieveLoadingError:error withDataTask:task forRequest:loadingRequest];
+    }
+    
+    if (error && isNetworkError) {
+        self.networkError = [DVAssetLoaderError loaderErrorWithError:error];
     }
 }
 
@@ -359,6 +388,21 @@
     NSURLComponents *actualURLComponents = [[NSURLComponents alloc] initWithURL:url resolvingAgainstBaseURL:NO];
     actualURLComponents.scheme = self.originalScheme;
     return [actualURLComponents URL];
+}
+
+BOOL isNetworkReachable() {
+    BOOL success = false;
+    const char *host_name = [@"example.com" cStringUsingEncoding:NSASCIIStringEncoding];
+    
+    SCNetworkReachabilityRef reachability = SCNetworkReachabilityCreateWithName(NULL, host_name);
+    SCNetworkReachabilityFlags flags;
+    success = SCNetworkReachabilityGetFlags(reachability, &flags);
+    
+    CFRelease(reachability);
+    
+    BOOL isAvailable = success && (flags & kSCNetworkFlagsReachable) && !(flags & kSCNetworkFlagsConnectionRequired);
+    
+    return isAvailable;
 }
 
 @end
