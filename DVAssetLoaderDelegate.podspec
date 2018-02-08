@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'DVAssetLoaderDelegate'
-  s.version          = '0.2.1'
+  s.version          = '0.3.0'
   s.summary          = 'Delegate for loading resources for AVAsset.'
   s.description      = <<-DESC
 This pod can help you play and cache AVAsset data with one request.
