@@ -17,5 +17,6 @@
 
 @property (nonatomic, weak) NSObject<DVAssetLoaderDelegatesDelegate> *delegate;
 @property (nonatomic) NSURLSession *session;
+@property (nonatomic) NSTimeInterval networkTimeout;
 
 @end
