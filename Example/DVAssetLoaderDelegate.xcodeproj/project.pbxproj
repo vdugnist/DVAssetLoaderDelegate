@@ -22,7 +22,6 @@
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
-		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
 		E227E261D27FBD847A0FBF4C /* Pods_DVAssetLoaderDelegate_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ABED3B5E364B35A11DA7998 /* Pods_DVAssetLoaderDelegate_Example.framework */; };
 /* End PBXBuildFile section */
 
@@ -59,7 +58,6 @@
 		6003F5BB195388D20070C39A /* Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		71719F9E1E33DC2100824A3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9D942DDFC25DD5562031BDA7 /* Pods_DVAssetLoaderDelegate_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DVAssetLoaderDelegate_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5569D95186D16C443A7B278 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		B72F47D3A2B4943F363CD9AB /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
@@ -134,7 +132,6 @@
 			children = (
 				6003F59C195388D20070C39A /* DVAppDelegate.h */,
 				6003F59D195388D20070C39A /* DVAppDelegate.m */,
-				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
 				6003F5A5195388D20070C39A /* DVViewController.h */,
 				6003F5A6195388D20070C39A /* DVViewController.m */,
 				71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */,
@@ -250,6 +247,9 @@
 				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = vdugnist;
 				TargetAttributes = {
+					6003F589195388D20070C39A = {
+						DevelopmentTeam = 47B3VSZ2Q5;
+					};
 					6003F5AD195388D20070C39A = {
 						TestTargetID = 6003F589195388D20070C39A;
 					};
@@ -279,7 +279,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
 				71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
@@ -555,6 +554,7 @@
 			baseConfigurationReference = C4804DAE0608A3D5892C1353 /* Pods-DVAssetLoaderDelegate_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 47B3VSZ2Q5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DVAssetLoaderDelegate/DVAssetLoaderDelegate-Prefix.pch";
 				INFOPLIST_FILE = "DVAssetLoaderDelegate/DVAssetLoaderDelegate-Info.plist";
@@ -570,6 +570,7 @@
 			baseConfigurationReference = CDC36B9DBCA0CF966AF5E8D2 /* Pods-DVAssetLoaderDelegate_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 47B3VSZ2Q5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DVAssetLoaderDelegate/DVAssetLoaderDelegate-Prefix.pch";
 				INFOPLIST_FILE = "DVAssetLoaderDelegate/DVAssetLoaderDelegate-Info.plist";
