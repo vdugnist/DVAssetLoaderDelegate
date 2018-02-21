@@ -122,11 +122,6 @@ static NSTimeInterval const kDefaultLoadingTimeout = 15;
             return NO;
         }
 
-        // when resource loader generates new request it is not interested in previous, so we can safely cancel them to save traffic
-        [self.dataTasks enumerateObjectsUsingBlock:^(NSURLSessionDataTask *_Nonnull obj, NSUInteger idx, BOOL *_Nonnull stop) {
-            [obj cancel];
-        }];
-
         if (@available(iOS 11, *)) {
             request.cachePolicy = NSURLRequestUseProtocolCachePolicy;
         }
