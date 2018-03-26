@@ -10,6 +10,12 @@
 
 static NSTimeInterval const kDefaultLoadingTimeout = 15;
 
+@interface DVURLAsset()
+
+@property (nonatomic, readonly) DVAssetLoaderDelegate *resourceLoaderDelegate;
+
+@end
+
 @implementation DVURLAsset
 
 - (instancetype)initWithURL:(NSURL *)URL options:(NSDictionary<NSString *,id> *)options {
@@ -37,11 +43,19 @@ static NSTimeInterval const kDefaultLoadingTimeout = 15;
 }
 
 - (void)setLoaderDelegate:(NSObject<DVAssetLoaderDelegatesDelegate> *)loaderDelegate {
-    ((DVAssetLoaderDelegate *)self.resourceLoader.delegate).delegate = loaderDelegate;
+    self.resourceLoaderDelegate.delegate = loaderDelegate;
 }
 
 - (NSObject<DVAssetLoaderDelegatesDelegate> *)loaderDelegate {
-    return ((DVAssetLoaderDelegate *)self.resourceLoader.delegate).delegate;
+    return self.resourceLoaderDelegate.delegate;
+}
+
+- (DVAssetLoaderDelegate *)resourceLoaderDelegate {
+    if ([self.resourceLoader.delegate isKindOfClass:[DVAssetLoaderDelegate class]]) {
+        return (DVAssetLoaderDelegate *)self.resourceLoader.delegate;
+    }
+    return nil;
+}
 }
 
 @end
