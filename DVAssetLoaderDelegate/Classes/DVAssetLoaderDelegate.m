@@ -139,9 +139,11 @@ static NSTimeInterval const kDefaultLoadingTimeout = 15;
         NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request];
         [dataTask resume];
 
-        [self.datas addObject:[NSMutableData new]];
-        [self.dataTasks addObject:dataTask];
-        [self.pendingRequests addObject:loadingRequest];
+        if (dataTask) {
+            [self.datas addObject:[NSMutableData new]];
+            [self.dataTasks addObject:dataTask];
+            [self.pendingRequests addObject:loadingRequest];
+        }
 
         return YES;
     }
