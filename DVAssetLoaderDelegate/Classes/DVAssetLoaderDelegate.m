@@ -61,6 +61,11 @@ static NSTimeInterval const kDefaultLoadingTimeout = 15;
     return NSStringFromClass(self);
 }
 
+- (void)cancelRequests {
+    [self.session invalidateAndCancel];
+    self.session = nil;
+}
+
 #pragma mark - Resource loader delegate
 
 - (BOOL)resourceLoader:(AVAssetResourceLoader *)resourceLoader shouldWaitForLoadingOfRequestedResource:(AVAssetResourceLoadingRequest *)loadingRequest {

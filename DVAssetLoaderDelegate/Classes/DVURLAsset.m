@@ -56,6 +56,9 @@ static NSTimeInterval const kDefaultLoadingTimeout = 15;
     }
     return nil;
 }
+
+- (void)dealloc {
+    [self.resourceLoaderDelegate cancelRequests];
 }
 
 @end

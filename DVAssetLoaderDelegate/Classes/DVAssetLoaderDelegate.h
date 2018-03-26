@@ -19,4 +19,6 @@
 @property (nonatomic) NSURLSession *session;
 @property (nonatomic) NSTimeInterval networkTimeout;
 
+- (void)cancelRequests;
+
 @end
