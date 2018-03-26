@@ -61,6 +61,11 @@ static NSTimeInterval const kDefaultLoadingTimeout = 15;
     return NSStringFromClass(self);
 }
 
+- (void)cancelRequests {
+    [self.session invalidateAndCancel];
+    self.session = nil;
+}
+
 #pragma mark - Resource loader delegate
 
 - (BOOL)resourceLoader:(AVAssetResourceLoader *)resourceLoader shouldWaitForLoadingOfRequestedResource:(AVAssetResourceLoadingRequest *)loadingRequest {
@@ -134,9 +139,11 @@ static NSTimeInterval const kDefaultLoadingTimeout = 15;
         NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request];
         [dataTask resume];
 
-        [self.datas addObject:[NSMutableData new]];
-        [self.dataTasks addObject:dataTask];
-        [self.pendingRequests addObject:loadingRequest];
+        if (dataTask) {
+            [self.datas addObject:[NSMutableData new]];
+            [self.dataTasks addObject:dataTask];
+            [self.pendingRequests addObject:loadingRequest];
+        }
 
         return YES;
     }
