@@ -18,6 +18,16 @@
 - (void)dvAssetLoaderDelegate:(DVAssetLoaderDelegate *)loaderDelegate
                   didLoadData:(NSData *)data
                        forURL:(NSURL *)url;
+
+/**
+ Called when the file downloaded completely.
+ May not be called when the file contains information not relevant to playback.
+ */
+- (void)dvAssetLoaderDelegate:(DVAssetLoaderDelegate *)loaderDelegate
+                  didLoadData:(NSData *)data
+                       forURL:(NSURL *)url
+                     withMIMEType:(NSString*)mimeType;
+
 /**
  Called when loader delegate downloaded data range so you can manually operate with a cache.
  */
