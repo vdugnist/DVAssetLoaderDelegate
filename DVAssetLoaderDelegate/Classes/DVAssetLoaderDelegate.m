@@ -317,7 +317,9 @@ static NSTimeInterval const kDefaultLoadingTimeout = 15;
     long long requestedOffset = loadingRequest.dataRequest.requestedOffset;
     NSUInteger length = loadedData.length;
     long long fullLength = [[(NSHTTPURLResponse *)task.response allHeaderFields][@"Content-Range"] componentsSeparatedByString:@"/"].lastObject.longLongValue;
-    [self processData:loadedData forOffset:requestedOffset length:length fullLength:fullLength];
+    NSString *mimeType = [(NSHTTPURLResponse *)task.response allHeaderFields][@"Content-Type"];
+
+    [self processData:loadedData forOffset:requestedOffset length:length fullLength:fullLength mimeType:mimeType];
 
     [self.pendingRequests removeObjectAtIndex:index];
     [self.datas removeObjectAtIndex:index];
@@ -360,7 +362,7 @@ static NSTimeInterval const kDefaultLoadingTimeout = 15;
     }
 }
 
-- (void)processData:(NSData *)data forOffset:(long long)offset length:(NSUInteger)length fullLength:(long long)fullLength {
+- (void)processData:(NSData *)data forOffset:(long long)offset length:(NSUInteger)length fullLength:(long long)fullLength mimeType:(NSString *)mimeType {
     if (fullLength == 0 || data.length == 0) {
         return;
     }
@@ -374,8 +376,13 @@ static NSTimeInterval const kDefaultLoadingTimeout = 15;
     }
 
     NSData *dataToSave = concatedDataFromRanges(self.datasForSavingToCache, fullLength);
-    if (dataToSave && [self.delegate respondsToSelector:@selector(dvAssetLoaderDelegate:didLoadData:forURL:)]) {
-        [self.delegate dvAssetLoaderDelegate:self didLoadData:dataToSave forURL:self.originalURL];
+    if (dataToSave) {
+        if ([self.delegate respondsToSelector:@selector(dvAssetLoaderDelegate:didLoadData:forURL:)]) {
+            [self.delegate dvAssetLoaderDelegate:self didLoadData:dataToSave forURL:self.originalURL];
+        }
+        if ([self.delegate respondsToSelector:@selector(dvAssetLoaderDelegate:didLoadData:forURL:withMIMEType:)]) {
+            [self.delegate dvAssetLoaderDelegate:self didLoadData:dataToSave forURL:self.originalURL withMIMEType:mimeType];
+        }
     }
 }
 
