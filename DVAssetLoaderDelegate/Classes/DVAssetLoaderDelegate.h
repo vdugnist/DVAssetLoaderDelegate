@@ -7,6 +7,7 @@
 
 #import <AVFoundation/AVAssetResourceLoader.h>
 #import "DVAssetLoaderDelegatesDelegate.h"
+#import "DVAssetLoaderDelegatesDataSource.h"
 
 @interface DVAssetLoaderDelegate : NSObject <AVAssetResourceLoaderDelegate>
 
@@ -16,6 +17,7 @@
 + (instancetype) new NS_UNAVAILABLE;
 
 @property (nonatomic, weak) NSObject<DVAssetLoaderDelegatesDelegate> *delegate;
+@property (nonatomic, weak) NSObject<DVAssetLoaderDelegatesDataSource> *dataSource;
 @property (nonatomic) NSURLSession *session;
 @property (nonatomic) NSTimeInterval networkTimeout;
 

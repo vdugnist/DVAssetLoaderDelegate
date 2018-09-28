@@ -7,9 +7,11 @@
 
 #import <MobileCoreServices/UTType.h>
 #import <SystemConfiguration/SCNetworkReachability.h>
+#import "DVAssetLoaderDelegatesDataSource.h"
 #import "DVAssetLoaderDelegate.h"
 #import "DVAssetLoaderHelpers.h"
 #import "DVAssetLoaderError.h"
+#import "DVAssetMediaInfo.h"
 
 static NSTimeInterval const kDefaultLoadingTimeout = 15;
 
@@ -107,48 +109,85 @@ static NSTimeInterval const kDefaultLoadingTimeout = 15;
         return YES;
     }];
 
-    if (loadingRequestIndex == NSNotFound) {
-        NSURL *actualURL = [self urlForLoadingRequest:loadingRequest];
-        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:actualURL];
-
-        if (loadingRequest.contentInformationRequest) {
-            request.HTTPMethod = @"HEAD"; // do not download data for content information request
-        }
-        else if (loadingRequest.dataRequest.requestsAllDataToEndOfResource) {
-            long long requestedOffset = loadingRequest.dataRequest.requestedOffset;
-            request.allHTTPHeaderFields = @{ @"Range" : [NSString stringWithFormat:@"bytes=%lld-", requestedOffset] };
-        }
-        else if (loadingRequest.dataRequest) {
-            long long requestedOffset = loadingRequest.dataRequest.requestedOffset;
-            long long requestedLength = loadingRequest.dataRequest.requestedLength;
-            request.allHTTPHeaderFields = @{ @"Range" : [NSString stringWithFormat:@"bytes=%lld-%lld", requestedOffset, requestedOffset + requestedLength - 1] };
-        }
-        else {
-            return NO;
-        }
-
-        if (@available(iOS 11, *)) {
-            request.cachePolicy = NSURLRequestUseProtocolCachePolicy;
-        }
-        else {
-            // On iOS <= 10 NSURLCache ignores range header and can return wrong chunk of data
-            // https://forums.developer.apple.com/thread/92119
-            request.cachePolicy = [request.HTTPMethod isEqualToString:@"HEAD"] ? NSURLRequestUseProtocolCachePolicy : NSURLRequestReloadIgnoringCacheData;
-        }
-
-        NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request];
-        [dataTask resume];
-
-        if (dataTask) {
-            [self.datas addObject:[NSMutableData new]];
-            [self.dataTasks addObject:dataTask];
-            [self.pendingRequests addObject:loadingRequest];
-        }
-
-        return YES;
+    if (loadingRequestIndex != NSNotFound) {
+        return NO;
     }
 
-    return NO;
+    NSURL *actualURL = [self urlForLoadingRequest:loadingRequest];
+
+    if (loadingRequest.contentInformationRequest && [self.dataSource respondsToSelector:@selector(mediaInfoForLoaderDelegate:url:)]) {
+        DVAssetMediaInfo *mediaInfo = [self.dataSource mediaInfoForLoaderDelegate:self url:actualURL];
+        if (mediaInfo) {
+            loadingRequest.contentInformationRequest.contentType = mediaInfo.contentType;
+            loadingRequest.contentInformationRequest.contentLength = mediaInfo.contentLength;
+            loadingRequest.contentInformationRequest.byteRangeAccessSupported = mediaInfo.byteRangedAccessSupported;
+            return YES;
+        }
+    }
+    
+    if (loadingRequest.dataRequest && [self.dataSource respondsToSelector:@selector(dataForLoaderDelegate:range:url:)]) {
+        long long requestedOffset = loadingRequest.dataRequest.requestedOffset;
+        
+        NSData *data = nil;
+        NSRange requestedRange = NSMakeRange(0, 0);
+        
+        if (loadingRequest.dataRequest.requestsAllDataToEndOfResource) {
+            data = [self.dataSource dataForLoaderDelegate:self withOffset:requestedOffset url:actualURL];
+            requestedRange = NSMakeRange(requestedOffset, data.length);
+        } else {
+            long long requestedLength = loadingRequest.dataRequest.requestedLength;
+            requestedRange = NSMakeRange(requestedOffset, requestedLength);
+            data = [self.dataSource dataForLoaderDelegate:self
+                                                    range:requestedRange
+                                                      url:actualURL];
+        }
+        
+        if (data.length > 0 && data.length == requestedRange.length) {
+            NSValue *rangeValue = [NSValue valueWithRange:requestedRange];
+            self.datasForSavingToCache[rangeValue] = data;
+            [loadingRequest.dataRequest respondWithData:data];
+            [loadingRequest finishLoading];
+            return YES;
+        }
+    }
+
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:actualURL];
+    
+    if (loadingRequest.contentInformationRequest) {
+        request.HTTPMethod = @"HEAD"; // do not download data for content information request
+    }
+    else if (loadingRequest.dataRequest.requestsAllDataToEndOfResource) {
+        long long requestedOffset = loadingRequest.dataRequest.requestedOffset;
+        request.allHTTPHeaderFields = @{ @"Range" : [NSString stringWithFormat:@"bytes=%lld-", requestedOffset] };
+    }
+    else if (loadingRequest.dataRequest) {
+        long long requestedOffset = loadingRequest.dataRequest.requestedOffset;
+        long long requestedLength = loadingRequest.dataRequest.requestedLength;
+        request.allHTTPHeaderFields = @{ @"Range" : [NSString stringWithFormat:@"bytes=%lld-%lld", requestedOffset, requestedOffset + requestedLength - 1] };
+    }
+    else {
+        return NO;
+    }
+    
+    if (@available(iOS 11, *)) {
+        request.cachePolicy = NSURLRequestUseProtocolCachePolicy;
+    }
+    else {
+        // On iOS <= 10 NSURLCache ignores range header and can return wrong chunk of data
+        // https://forums.developer.apple.com/thread/92119
+        request.cachePolicy = [request.HTTPMethod isEqualToString:@"HEAD"] ? NSURLRequestUseProtocolCachePolicy : NSURLRequestReloadIgnoringCacheData;
+    }
+    
+    NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request];
+    [dataTask resume];
+    
+    if (dataTask) {
+        [self.datas addObject:[NSMutableData new]];
+        [self.dataTasks addObject:dataTask];
+        [self.pendingRequests addObject:loadingRequest];
+    }
+    
+    return YES;
 }
 
 - (void)resourceLoader:(AVAssetResourceLoader *)resourceLoader didCancelLoadingRequest:(AVAssetResourceLoadingRequest *)loadingRequest {
@@ -359,6 +398,14 @@ static NSTimeInterval const kDefaultLoadingTimeout = 15;
     }
     else {
         contentInformationRequest.contentLength = [contentRange componentsSeparatedByString:@"/"].lastObject.longLongValue;
+    }
+    
+    if ([self.delegate respondsToSelector:@selector(dvAssetLoaderDelegate:didLoadMediaInfo:forUrl:)]) {
+        DVAssetMediaInfo *info = [DVAssetMediaInfo new];
+        info.contentType = contentInformationRequest.contentType;
+        info.contentLength = contentInformationRequest.contentLength;
+        info.byteRangedAccessSupported = contentInformationRequest.byteRangeAccessSupported;
+        [self.delegate dvAssetLoaderDelegate:self didLoadMediaInfo:info forUrl:self.originalURL];
     }
 }
 

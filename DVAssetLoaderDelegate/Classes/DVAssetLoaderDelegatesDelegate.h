@@ -7,6 +7,7 @@
 
 #import <AVFoundation/AVFoundation.h>
 @class DVAssetLoaderDelegate;
+@class DVAssetMediaInfo;
 
 @protocol DVAssetLoaderDelegatesDelegate <NSObject>
 @optional
@@ -27,6 +28,13 @@
                   didLoadData:(NSData *)data
                        forURL:(NSURL *)url
                      withMIMEType:(NSString*)mimeType;
+
+/**
+ Called when loader delegate downloaded content info
+ */
+- (void)dvAssetLoaderDelegate:(DVAssetLoaderDelegate *)loaderDelegate
+             didLoadMediaInfo:(DVAssetMediaInfo *)mediaInfo
+                       forUrl:(NSURL *)url;
 
 /**
  Called when loader delegate downloaded data range so you can manually operate with a cache.
