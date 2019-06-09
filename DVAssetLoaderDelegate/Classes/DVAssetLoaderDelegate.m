@@ -112,7 +112,7 @@ static NSTimeInterval const kDefaultLoadingTimeout = 15;
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:actualURL];
 
         if (loadingRequest.contentInformationRequest) {
-            request.HTTPMethod = @"HEAD"; // do not download data for content information request
+            request.allHTTPHeaderFields = @{ @"Range" : @"bytes=0-1" };
         }
         else if (loadingRequest.dataRequest.requestsAllDataToEndOfResource) {
             long long requestedOffset = loadingRequest.dataRequest.requestedOffset;
