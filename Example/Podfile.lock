@@ -1,16 +1,16 @@
 PODS:
-  - DVAssetLoaderDelegate (0.2.1)
+  - DVAssetLoaderDelegate (0.3.2)
 
 DEPENDENCIES:
   - DVAssetLoaderDelegate (from `../`)
 
 EXTERNAL SOURCES:
   DVAssetLoaderDelegate:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
-  DVAssetLoaderDelegate: 8315dda9bf515a61912d407c079332185288c388
+  DVAssetLoaderDelegate: 38a24530292bf77900fdfdf635434f7f9b49486d
 
 PODFILE CHECKSUM: ed07cf8cd0027cfc409fa2bdb8cb96d5e9b06c89
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.6.1

@@ -21,7 +21,7 @@
 - (void)loadView {
     self.view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     
-    NSURL *url = [NSURL URLWithString:@"http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_5mb.mp4"];
+    NSURL *url = [NSURL URLWithString:@"https://sample-videos.com/video123/mp4/240/big_buck_bunny_240p_20mb.mp4"];
     DVURLAsset *asset = [[DVURLAsset alloc] initWithURL:url options:nil];
     asset.loaderDelegate = self;
     

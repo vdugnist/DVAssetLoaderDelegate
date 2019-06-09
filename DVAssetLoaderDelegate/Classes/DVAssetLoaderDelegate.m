@@ -208,23 +208,35 @@ static NSTimeInterval const kDefaultLoadingTimeout = 15;
 
     NSMutableData *mutableData = self.datas[index];
     NSParameterAssert(mutableData.length == currentOffset - requestedOffset);
+    
+    NSError *error = nil;
+    NSInteger statusCode = [(NSHTTPURLResponse *)dataTask.response statusCode];
+    if (statusCode < 200 || statusCode >= 400) {
+         error = [NSError errorWithDomain:NSURLErrorDomain
+                                             code:statusCode
+                                         userInfo:@{ NSLocalizedDescriptionKey : @"Server returned failure status code" }];
+    }
 
-    if (![self isRangeOfRequest:dataTask.currentRequest
+
+    if (!error && ![self isRangeOfRequest:dataTask.currentRequest
             equalsToRangeOfResponse:(NSHTTPURLResponse *)dataTask.response
                     requestToTheEnd:loadingRequest.dataRequest.requestsAllDataToEndOfResource]) {
         data = [self subdataFromData:data
                           forRequest:dataTask.currentRequest
                             response:(NSHTTPURLResponse *)dataTask.response
                       loadingRequest:loadingRequest];
-    }
 
-    if (!data) {
-        NSError *error = [NSError errorWithDomain:NSURLErrorDomain
-                                             code:NSURLErrorBadServerResponse
-                                         userInfo:@{ NSLocalizedDescriptionKey : @"Server returned wrong range of data or empty data" }];
+        if (!data) {
+            error = [NSError errorWithDomain:NSURLErrorDomain
+                                        code:NSURLErrorBadServerResponse
+                                    userInfo:@{ NSLocalizedDescriptionKey : @"Server returned wrong range of data or empty data" }];
+        }
+    }
+    
+    if (error) {
         [loadingRequest finishLoadingWithError:error];
         [dataTask cancel];
-
+        
         if ([self.delegate respondsToSelector:@selector(dvAssetLoaderDelegate:didRecieveLoadingError:withDataTask:forRequest:)]) {
             [self.delegate dvAssetLoaderDelegate:self didRecieveLoadingError:error withDataTask:dataTask forRequest:loadingRequest];
         }
